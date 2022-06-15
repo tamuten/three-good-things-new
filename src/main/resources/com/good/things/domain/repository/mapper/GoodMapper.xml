@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.good.things.domain.repository.mapper.GoodMapper">
+	<select id="findOne"
+		resultType="com.good.things.domain.model.Diary">
+SELECT
+    date,
+    good1,
+    good2,
+    good3
+FROM
+    good
+WHERE
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+AND date = #{date,
+    jdbcType = DATE}
+;
+	</select>
+  </mapper>
