@@ -2,10 +2,12 @@ import { useState, useEffect, FC, ChangeEvent } from "react";
 
 type Props = {
   good: string;
+  onSave: (good: string, num: number) => void;
+  num: number;
 }
 
 export const Good: FC<Props> = (props) => {
-  const { good } = props;
+  const { good, onSave, num } = props;
   const [tmpGood, setTmpGood] = useState(good);
   const [editMode, setEditMode] = useState(false);
 
@@ -24,7 +26,7 @@ export const Good: FC<Props> = (props) => {
   };
 
   const handleSaveBtnClick = () => {
-    // setGood(() => tmpGood);
+    onSave(tmpGood, num);
     handleClick();
   };
 

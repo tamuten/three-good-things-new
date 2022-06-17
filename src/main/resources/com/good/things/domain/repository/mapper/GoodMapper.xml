@@ -23,4 +23,24 @@ AND date = #{date,
     jdbcType = DATE}
 ;
 	</select>
+  <insert id="save">
+  INSERT INTO 
+    good
+    (
+      user_id,
+      date,
+      good1,
+      good2,
+      good3
+    )
+  VALUES(
+    2,
+    #{diary.date},
+    #{diary.good1},
+    #{diary.good2},
+    #{diary.good3}
+  )
+  
+  
+  </insert>
   </mapper>

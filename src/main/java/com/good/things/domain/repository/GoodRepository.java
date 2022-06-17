@@ -16,4 +16,8 @@ public class GoodRepository {
   public Diary findOne(LocalDate date, String mailAddress) {
     return mapper.findOne(date, mailAddress);
   }
+
+  public int save(Diary diary, String mailAddress) {
+    return mapper.save(diary, mailAddress);
+  }
 }

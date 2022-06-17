@@ -18,4 +18,8 @@ public class DiaryService {
   public Diary findOne(LocalDate date, String mailAddress) {
     return repository.findOne(date, mailAddress);
   }
+
+  public int save(Diary diary, String mailAddress) {
+    return repository.save(diary, mailAddress);
+  }
 }
