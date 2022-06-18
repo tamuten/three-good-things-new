@@ -10,6 +10,5 @@ import com.good.things.domain.model.Diary;
 @Mapper
 public interface GoodMapper {
   public Diary findOne(LocalDate date, String mailAddress);
-
   public int save(@Param("diary") Diary diary, String mailAddress);
 }
