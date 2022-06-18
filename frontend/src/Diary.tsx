@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Good } from "./Good";
+import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
 
 type TDiary = {
   date: Date;
@@ -16,7 +17,7 @@ type DiaryObj = {
 export const Diary = () => {
   console.log("render");
   const initialDate: Date = new Date();
-  const [sysDate, setSysDate] = useState(initialDate);
+  const [sysDate, setSysDate] = useState<Date>(initialDate);
   const [diary, setDiary] = useState<TDiary | null>(null);
 
   const prevDate = (today: Date): Date => {
@@ -29,17 +30,23 @@ export const Diary = () => {
     return today;
   }
 
-  const handlePrevBtn = () => {
+  const handlePrevBtn = (): void => {
     let sysDateSlice = new Date(sysDate.getTime());
-    setSysDate(prevDate(sysDateSlice));
+    let prev = prevDate(sysDateSlice);
+    setSysDate(prev);
+
+    fetchDiary(prev);
   };
 
-  const handleNextBtn = () => {
+  const handleNextBtn = (): void => {
     let sysDateSlice = new Date(sysDate.getTime());
-    setSysDate(nextDate(sysDateSlice));
+    let next = nextDate(sysDateSlice);
+    setSysDate(next);
+
+    fetchDiary(next);
   };
 
-  const handleSaveBtnClick = (good: string, num: number) => {
+  const handleSaveBtnClick = (good: string, num: number): void => {
     let _copy = JSON.parse(JSON.stringify(diary));
     _copy.good[num] = good;
     setDiary(_copy);
@@ -47,32 +54,34 @@ export const Diary = () => {
     postData(_copy);
   };
 
+  const fetchDiary = async (date: Date) => {
+    const dateParam = formatDateHyphen(date);
+    const mes = await fetch('/api/diary?date=' + dateParam)
+      .then(
+        response => response.text(),
+        reason => {
+          console.error(reason); // Error!
+        }
+      );
+
+    if (mes) {
+      const obj: DiaryObj = JSON.parse(mes);
+
+      setDiary({
+        date: obj.date,
+        good: [obj.good1, obj.good2, obj.good3]
+      });
+    } else {
+      setDiary(null);
+    }
+  }
+
   useLayoutEffect(() => {
     console.log("useLayoutEffect called.")
-    fetch('/api/diary')
-      .then(response => response.text())
-      .then(message => {
-        const obj: DiaryObj = JSON.parse(message);
-
-        setDiary({
-          date: obj.date,
-          good: [obj.good1, obj.good2, obj.good3]
-        });
-      });
+    const today = new Date();
+    fetchDiary(today);
   }, []);
 
-  const fetchData = async (date: Date) => {
-    fetch('/api/diary')
-      .then(response => response.text())
-      .then(message => {
-        const obj: DiaryObj = JSON.parse(message);
-
-        setDiary({
-          date: obj.date,
-          good: [obj.good1, obj.good2, obj.good3]
-        });
-      });
-  }
 
   const postData = async (data: TDiary) => {
     if (data == null) {

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.good.things.domain.model.Diary;
@@ -26,8 +27,9 @@ public class FrontController {
   }
 
   @GetMapping("/api/diary")
-  public Diary getDiary() {
-    Diary diary = diaryService.findOne(LocalDate.of(2022, 6, 5), "tamuten310@gmail.com");
+  public Diary getDiary(@RequestParam String date) {
+    System.out.println(date);
+    Diary diary = diaryService.findOne(LocalDate.parse(date), "tamuten310@gmail.com");
     return diary;
   }
 
