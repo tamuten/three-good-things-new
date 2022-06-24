@@ -1,6 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { Good } from "./Good";
 import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
+import Spinner from 'react-bootstrap/Spinner'
 
 type TDiary = {
   date: Date;
@@ -72,7 +73,10 @@ export const Diary = () => {
         good: [obj.good1, obj.good2, obj.good3]
       });
     } else {
-      setDiary(null);
+      setDiary({
+        date: date,
+        good: ['', '', '']
+      });
     }
   }
 
@@ -109,18 +113,25 @@ export const Diary = () => {
 
   return (
     <>
-      <ul>
-        <li>
-          <button onClick={handlePrevBtn}>prev</button>
-        </li>
-        <li>
-          <button onClick={handleNextBtn}>next</button>
-        </li>
-      </ul>
-      <p>{sysDate.getFullYear() + "/" + (sysDate.getMonth() + 1) + "/" + sysDate.getDate()}</p>
-      <Good good={diary == null ? "" : diary.good[0]} onSave={handleSaveBtnClick} num={0} />
-      <Good good={diary == null ? "" : diary.good[1]} onSave={handleSaveBtnClick} num={1} />
-      <Good good={diary == null ? "" : diary.good[2]} onSave={handleSaveBtnClick} num={2} />
+      {diary ?
+        <div>
+          <ul>
+            <li>
+              <button onClick={handlePrevBtn}>prev</button>
+            </li>
+            <li>
+              <button onClick={handleNextBtn}>next</button>
+            </li>
+          </ul>
+          <p>{sysDate.getFullYear() + "/" + (sysDate.getMonth() + 1) + "/" + sysDate.getDate()}</p>
+          <Good good={diary.good[0]} onSave={handleSaveBtnClick} num={0} />
+          <Good good={diary.good[1]} onSave={handleSaveBtnClick} num={1} />
+          <Good good={diary.good[2]} onSave={handleSaveBtnClick} num={2} />
+        </div>
+        :
+        <Spinner animation="border" />
+      }
+
     </>
   )
 };

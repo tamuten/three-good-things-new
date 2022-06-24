@@ -8,8 +8,8 @@ type Props = {
 
 export const Good: FC<Props> = (props) => {
   const { good, onSave, num } = props;
-  const [tmpGood, setTmpGood] = useState(good);
-  const [editMode, setEditMode] = useState(false);
+  const [tmpGood, setTmpGood] = useState<string>(good);
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   const handleClick = () => setEditMode(!editMode);
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {

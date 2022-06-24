@@ -24,23 +24,26 @@ AND date = #{date,
 ;
 	</select>
   <insert id="save">
-  INSERT INTO 
-    good
-    (
-      user_id,
-      date,
-      good1,
-      good2,
-      good3
-    )
-  VALUES(
+INSERT INTO good(
+    user_id,
+    date,
+    good1,
+    good2,
+    good3
+)
+VALUES(
     2,
     #{diary.date},
     #{diary.good1},
     #{diary.good2},
     #{diary.good3}
-  )
-  
-  
+)
+ON  CONFLICT
+ON  CONSTRAINT unique_cons_good DO
+    UPDATE
+    SET
+        good1 = #{diary.good1},
+        good2 = #{diary.good2},
+        good3 = #{diary.good3}
   </insert>
   </mapper>
