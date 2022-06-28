@@ -1,12 +1,8 @@
 import { useLayoutEffect, useState } from "react";
 import { Good } from "./Good";
+import type { TDiary } from './types/tDiary';
 import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
 import Spinner from 'react-bootstrap/Spinner'
-
-type TDiary = {
-  date: Date;
-  good: string[];
-}
 
 type DiaryObj = {
   date: Date;

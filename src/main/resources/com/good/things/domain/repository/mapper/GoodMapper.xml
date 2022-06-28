@@ -23,6 +23,21 @@ AND date = #{date,
     jdbcType = DATE}
 ;
 	</select>
+  <select id="findAll" resultType="com.good.things.domain.model.Diary">
+  SELECT 
+    *
+  FROM
+    good
+  WHERE
+    user_id = (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    )
+  </select>
   <insert id="save">
 INSERT INTO good(
     user_id,

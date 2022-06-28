@@ -2,6 +2,7 @@ package com.good.things;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,5 +42,10 @@ public class FrontController {
     log.debug("[saving diary] = " + diary.toString());
     String mailAddress = "tamuten310@gmail.com";
     diaryService.save(diary, mailAddress);
+  }
+
+  @GetMapping("/api/getTimeline")
+  public List<Diary> getTimeline() {
+    return diaryService.findAll("tamuten310@gmail.com");
   }
 }
