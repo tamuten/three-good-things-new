@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.good.things.domain.repository.mapper.GoodMapper">
 	<select id="findOne"
-		resultType="com.good.things.domain.model.Diary">
+		resultType="Diary">
 SELECT
     date,
     good1,
@@ -23,12 +23,12 @@ AND date = #{date,
     jdbcType = DATE}
 ;
 	</select>
-  <select id="findAll" resultType="com.good.things.domain.model.Diary">
-  SELECT 
+  <select id="findAll" resultType="Diary">
+SELECT
     *
-  FROM
+FROM
     good
-  WHERE
+WHERE
     user_id = (
         SELECT
             id
@@ -37,6 +37,8 @@ AND date = #{date,
         WHERE
             mail_address = #{mailAddress}
     )
+ORDER BY
+    date DESC
   </select>
   <insert id="save">
 INSERT INTO good(

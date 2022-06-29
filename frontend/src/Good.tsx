@@ -1,4 +1,6 @@
 import { useState, useEffect, FC, ChangeEvent } from "react";
+import { Display } from "./diary/Display";
+import { Edit } from "./diary/Edit";
 
 type Props = {
   good: string;
@@ -33,16 +35,14 @@ export const Good: FC<Props> = (props) => {
   return (
     <>
       {editMode ? (
-        <div>
-          <textarea onChange={handleTextChange} value={tmpGood}></textarea>
-          <p>{tmpGood.length}</p>
-          <button onClick={handleCancelBtnClick}>キャンセル</button>
-          <button onClick={handleSaveBtnClick}>保存</button>
-        </div>
+        <Display
+          tmpGood={tmpGood}
+          handleTextChange={handleTextChange}
+          handleCancelBtnClick={handleCancelBtnClick}
+          handleSaveBtnClick={handleSaveBtnClick}
+        />
       ) : (
-        <div className="edit">
-          <a onClick={handleClick}>{good ? good : "タップして編集する"}</a>
-        </div>
+        <Edit good={good} handleClick={handleClick} />
       )}
     </>
   );

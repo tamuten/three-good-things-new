@@ -1,15 +1,11 @@
 import { useLayoutEffect, useState } from "react";
 import { Good } from "./Good";
 import type { TDiary } from './types/tDiary';
+import type { DiaryObj } from "./types/diaryObj";
 import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
+import { formatDateSlashForDisplay } from "./dateUtil/formatDateSlashForDisplay";
 import Spinner from 'react-bootstrap/Spinner'
 
-type DiaryObj = {
-  date: Date;
-  good1: string;
-  good2: string;
-  good3: string;
-}
 
 export const Diary = () => {
   console.log("render");
@@ -109,6 +105,7 @@ export const Diary = () => {
 
   return (
     <>
+      <h3>ここから日記です。</h3>
       {diary ?
         <div>
           <ul>
@@ -119,7 +116,7 @@ export const Diary = () => {
               <button onClick={handleNextBtn}>next</button>
             </li>
           </ul>
-          <p>{sysDate.getFullYear() + "/" + (sysDate.getMonth() + 1) + "/" + sysDate.getDate()}</p>
+          <p>{formatDateSlashForDisplay(sysDate)}</p>
           <Good good={diary.good[0]} onSave={handleSaveBtnClick} num={0} />
           <Good good={diary.good[1]} onSave={handleSaveBtnClick} num={1} />
           <Good good={diary.good[2]} onSave={handleSaveBtnClick} num={2} />

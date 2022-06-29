@@ -1,22 +1,13 @@
 import { useLayoutEffect, useState } from 'react';
 import type { TDiary } from './types/tDiary';
 import type { DiaryObj } from './types/diaryObj';
+import { formatDateSlashForDisplay } from './dateUtil/formatDateSlashForDisplay';
 import Spinner from 'react-bootstrap/Spinner'
 
 export const Timeline = () => {
   const [timeline, setTimeline] = useState<TDiary[]>([]);
 
   useLayoutEffect(() => {
-    setTimeline([
-      {
-        date: new Date(),
-        good: ["こんにちは", "檜山沙耶です。", "お天気キャスターです。"]
-      },
-      {
-        date: new Date(2022, 5, 29),
-        good: ["こんにちは", "駒木結衣です。", "お天気キャスターです。"]
-      }
-    ]);
     fetchTimeline();
   }, []);
 
@@ -29,25 +20,31 @@ export const Timeline = () => {
         }
       );
 
-    console.log(mes);
     if (mes) {
       const obj: DiaryObj[] = JSON.parse(mes);
-      const timeline = obj.map(o => {
-        // date: o.date,
-        // good: [o.good1, o.good2, o.good3]
-      });
+      const newTimeline: TDiary[] = [];
+      for (let o of obj) {
+        const diary: TDiary = {
+          date: new Date(o.date),
+          good: [o.good1, o.good2, o.good3]
+        };
+        newTimeline.push(diary);
+      }
+      setTimeline(newTimeline);
+
     }
   }
 
   return (
     <>
+      <h3>ここからタイムラインです。</h3>
       {timeline.length ?
         <div>
-          {timeline.map(t =>
-            <>
-              <p>{t.date.getFullYear() + "/" + (t.date.getMonth() + 1) + "/" + t.date.getDate()}</p>
-              {t.good.map(g => <p>{g}</p>)}
-            </>
+          {timeline.map((t, i) =>
+            <div key={i}>
+              <p>{formatDateSlashForDisplay(t.date)}</p>
+              {t.good.map((g, j) => <p key={j}>{g}</p>)}
+            </div>
           )
           }
         </div> :
