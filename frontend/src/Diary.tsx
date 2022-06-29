@@ -4,8 +4,6 @@ import type { TDiary } from './types/tDiary';
 import type { DiaryObj } from "./types/diaryObj";
 import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
 import { formatDateSlashForDisplay } from "./dateUtil/formatDateSlashForDisplay";
-import Spinner from 'react-bootstrap/Spinner'
-
 
 export const Diary = () => {
   console.log("render");
@@ -122,7 +120,7 @@ export const Diary = () => {
           <Good good={diary.good[2]} onSave={handleSaveBtnClick} num={2} />
         </div>
         :
-        <Spinner animation="border" />
+        <></>
       }
 
     </>

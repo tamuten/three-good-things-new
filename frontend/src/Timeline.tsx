@@ -2,7 +2,6 @@ import { useLayoutEffect, useState } from 'react';
 import type { TDiary } from './types/tDiary';
 import type { DiaryObj } from './types/diaryObj';
 import { formatDateSlashForDisplay } from './dateUtil/formatDateSlashForDisplay';
-import Spinner from 'react-bootstrap/Spinner'
 
 export const Timeline = () => {
   const [timeline, setTimeline] = useState<TDiary[]>([]);
@@ -48,7 +47,7 @@ export const Timeline = () => {
           )
           }
         </div> :
-        <p>投稿はありません。</p>
+        <></>
       }
 
     </>
