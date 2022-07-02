@@ -1,6 +1,6 @@
 import { useState, useEffect, FC, ChangeEvent } from "react";
-import { Display } from "./diary/Display";
-import { Edit } from "./diary/Edit";
+import { Display } from "./Display";
+import { Edit } from "./Edit";
 
 type Props = {
   good: string;
@@ -22,12 +22,12 @@ export const Good: FC<Props> = (props) => {
     setTmpGood(good);
   }, [props]);
 
-  const handleCancelBtnClick = () => {
+  const handleCancelBtnClick = (): void => {
     setTmpGood(() => good);
     handleClick();
   };
 
-  const handleSaveBtnClick = () => {
+  const handleSaveBtnClick = (): void => {
     onSave(tmpGood, num);
     handleClick();
   };

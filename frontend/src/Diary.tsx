@@ -1,12 +1,11 @@
 import { useLayoutEffect, useState } from "react";
-import { Good } from "./Good";
+import { Good } from "./diary/Good";
 import type { TDiary } from './types/tDiary';
 import type { DiaryObj } from "./types/diaryObj";
 import { formatDateHyphen } from "./dateUtil/formatDateHyphen";
 import { formatDateSlashForDisplay } from "./dateUtil/formatDateSlashForDisplay";
 
 export const Diary = () => {
-  console.log("render");
   const initialDate: Date = new Date();
   const [sysDate, setSysDate] = useState<Date>(initialDate);
   const [diary, setDiary] = useState<TDiary | null>(null);
@@ -22,23 +21,23 @@ export const Diary = () => {
   }
 
   const handlePrevBtn = (): void => {
-    let sysDateSlice = new Date(sysDate.getTime());
-    let prev = prevDate(sysDateSlice);
+    const sysDateSlice = new Date(sysDate.getTime());
+    const prev = prevDate(sysDateSlice);
     setSysDate(prev);
 
     fetchDiary(prev);
   };
 
   const handleNextBtn = (): void => {
-    let sysDateSlice = new Date(sysDate.getTime());
-    let next = nextDate(sysDateSlice);
+    const sysDateSlice = new Date(sysDate.getTime());
+    const next = nextDate(sysDateSlice);
     setSysDate(next);
 
     fetchDiary(next);
   };
 
   const handleSaveBtnClick = (good: string, num: number): void => {
-    let _copy = JSON.parse(JSON.stringify(diary));
+    const _copy = JSON.parse(JSON.stringify(diary));
     _copy.good[num] = good;
     setDiary(_copy);
 
@@ -106,14 +105,8 @@ export const Diary = () => {
       <h3>ここから日記です。</h3>
       {diary ?
         <div>
-          <ul>
-            <li>
-              <button onClick={handlePrevBtn}>prev</button>
-            </li>
-            <li>
-              <button onClick={handleNextBtn}>next</button>
-            </li>
-          </ul>
+          <button onClick={handlePrevBtn}>prev</button>
+          <button onClick={handleNextBtn}>next</button>
           <p>{formatDateSlashForDisplay(sysDate)}</p>
           <Good good={diary.good[0]} onSave={handleSaveBtnClick} num={0} />
           <Good good={diary.good[1]} onSave={handleSaveBtnClick} num={1} />
