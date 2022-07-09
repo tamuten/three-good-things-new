@@ -48,8 +48,16 @@ INSERT INTO good(
     good2,
     good3
 )
-VALUES(
-    2,
+VALUES
+(
+    (
+        SELECT
+            id
+        FROM
+            users
+        WHERE
+            mail_address = #{mailAddress}
+    ),
     #{diary.date},
     #{diary.good1},
     #{diary.good2},
